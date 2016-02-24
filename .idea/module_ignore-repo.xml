@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_ignore-repo" default="compile.module.ignore-repo">
+  <dirname property="module.ignore-repo.basedir" file="${ant.file.module_ignore-repo}"/>
+  
+  <property name="module.jdk.home.ignore-repo" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.ignore-repo" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.ignore-repo" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.ignore-repo" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="ignore-repo.output.dir" value="undefined"/>
+  <property name="ignore-repo.testoutput.dir" value="undefined"/>
+  
+  <path id="ignore-repo.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="ignore-repo.module.production.classpath">
+    <path refid="${module.jdk.classpath.ignore-repo}"/>
+  </path>
+  
+  <path id="ignore-repo.runtime.production.module.classpath"/>
+  
+  <path id="ignore-repo.module.classpath">
+    <path refid="${module.jdk.classpath.ignore-repo}"/>
+  </path>
+  
+  <path id="ignore-repo.runtime.module.classpath"/>
+  
+  
+  <patternset id="excluded.from.module.ignore-repo">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.ignore-repo">
+    <patternset refid="excluded.from.module.ignore-repo"/>
+  </patternset>
+  
+  
+  <target name="compile.module.ignore-repo" depends="compile.module.ignore-repo.production,compile.module.ignore-repo.tests" description="Compile module ignore-repo"/>
+  
+  <target name="compile.module.ignore-repo.production" depends="register.custom.compilers" description="Compile module ignore-repo; production classes"/>
+  
+  <target name="compile.module.ignore-repo.tests" depends="register.custom.compilers,compile.module.ignore-repo.production" description="compile module ignore-repo; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.ignore-repo" description="cleanup module">
+    <delete dir="${ignore-repo.output.dir}"/>
+    <delete dir="${ignore-repo.testoutput.dir}"/>
+  </target>
+</project>
