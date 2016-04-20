@@ -1,10 +1,10 @@
 import java.util.Random;
 import java.util.concurrent.SynchronousQueue;
 
-public class Producer implements Runnable {
-    private SynchronousQueue<String> drop;
+public class ProducerOld implements Runnable {
+    private Drop drop;
 
-    public Producer(SynchronousQueue<String> drop) {
+    public ProducerOld(Drop drop) {
         this.drop = drop;
     }
 
@@ -20,16 +20,11 @@ public class Producer implements Runnable {
         try {
             java.util.Arrays.stream(importantInfo).forEach(
                     s -> {
-                        try {
-                            drop.put(s);
+                        drop.put(s);
                             try {
                                 Thread.sleep(random.nextInt(5000));
                             } catch (InterruptedException e) {
                             }
-                        }
-                        catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
                     });
             drop.put("DONE");
         }
